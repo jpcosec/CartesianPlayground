@@ -1,7 +1,9 @@
 import pygame
+from pygame_gui import UI_TEXT_ENTRY_CHANGED
 
 class User:
-    def __init__(self):
+    def __init__(self, manager):
+        self.manager = manager
         self.keys_pressed = []
         self.mouse_button_pressed = False
         self.mouse_pos = (0, 0)
@@ -12,9 +14,12 @@ class User:
     def process_events(self):
         # Go through all the events
         for event in pygame.event.get():
+
             if event.type == pygame.QUIT:
                 self.handle_quit()
                 return False
+            if event.type == UI_TEXT_ENTRY_CHANGED:
+                print("to_be_implemented")
             elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
                 self.handle_key_event(event)
             elif event.type in (pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP):
@@ -25,6 +30,7 @@ class User:
             else:
                 self.mouse_motion = False
                 self.mouse_rel = (0, 0)
+            self.manager.process_events(event)
 
         return True
 

@@ -3,6 +3,7 @@ import pygame
 
 from config import HEADER_SIZE, COLOR_BUTTON_PASIVE, COLOR_BUTTON_HOVERED, COLOR_BUTTON_ACTIVE, COLOR_BLACK, COLOR_WHITE
 
+from pygame_gui.elements import UIWindow, UITextEntryBox, UITextBox
 
 class Button:
     def __init__(self,
@@ -51,11 +52,15 @@ class Button:
         self.screen.blit(text_surface, text_rect)
 
 
+# Crear class message que lea de un dict de html y haga display de instrucciones
+
+
 class Header:
     def __init__(self, height, color, font, screen,
-                 buttons = {
-                     "figure": (400, 2),
-                     "point": (500,2)
+                 buttons = {# Agregar boton de instrucciones
+                     "line": (400, 2),
+                     "point": (500,2),
+                     "intro": (300,2)
                  }
                  ):
         self.height = height
@@ -67,6 +72,20 @@ class Header:
                         for k,v in buttons.items()
                         }
         self.selected_button = ""
+
+        # Crear array de instrucciones
+        self.text_intro = None
+        self.deploy_intro()
+
+
+    def deploy_intro(self):
+        # Meter instrucciones
+        output_window = UIWindow(pygame.Rect(400, 20, 300, 400), window_display_title="instrucciones")
+        self.text_intro = UITextBox(
+            relative_rect=pygame.Rect((0, 0), output_window.get_container().get_size()),
+            html_text="textoTESTO hay que escribir de que se trata esta computacion",
+            container=output_window)
+
 
     def draw(self, text):
         pygame.draw.rect(self.screen, self.color, (0, 0, self.screen.get_width(), self.height))
@@ -88,10 +107,17 @@ class Header:
             if v.is_hovered:
                 if user.mouse_button_pressed:
                     self.clear_buttons_state()
+                    if k == "intro":
+                        print("intro")
+                        self.deploy_intro()
+                        return out
                     v.set_state(True)
                     self.selected_button = k
                     out = k
+
         return out
 
-    def is_mouse_inside(self, mouse_pos):
+    def is_mouse_inside(self, mouse_pos):# todo: return true si hay mensaje deployado
+        if self.text_intro.alive():
+            return True
         return mouse_pos[1] < self.height
