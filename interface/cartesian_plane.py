@@ -4,8 +4,8 @@ import numpy as np
 
 from config import *
 
-from figures import Figure, Point, Line
-from grid import Grid
+from .figures import Figure, Point, Line
+from .grid import Grid
 
 
 # init with app
@@ -100,7 +100,6 @@ class Cartesian_plane(Grid):
                 if user.mouse_button_pressed:
                     f.set_state(True)
                     self.selected_figure = f
-
 
     def run(self, user):
 

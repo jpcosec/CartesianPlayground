@@ -22,5 +22,9 @@ COLOR_BUTTON_PASIVE = COLOR_LIGHT_GRAY
 # GRID
 FONT_SIZE = 25
 
+# Camera
+CAPTURE_TIME = 5
+OUT_FOLDER = "output/csv"
+FRAMES_FOLDER = "output/frames"
 
 # Messages

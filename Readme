@@ -1,0 +1,20 @@
+
+# Playground Cartesiano
+
+
+El siguiente proyecto esta siendo desarrollado para el departamento de educacion de la universidad de playa ancha.
+
+El objetivo del proyecto es desarrollar una interfaz que permita al estudiante interactuar con un espacio cartesiano, resolviendo distintas preguntas que le permitan ahondar en su conocimiento de los espacios vectoriales. Paralelamente el programa realiza un trackeo de su cara y clasifica su nivel de stress en pos de permitir realizar feedback que ayude a guiar al estudiante.
+
+El programa fue desarrollado en python 3, usando las librerias pygame para la interfaz y opencv para el uso de la camara. Se tomó la desicion de desarrollarlo bajo el paradigma orientado a objetos con el fin de asegurar la reutilizabilidad e independencia de los modulos. Requiere de compatibilidad con threads, tanto para la interfaz como para el procesamiento de las imagenes de la webcam.
+
+La carpeta se estructura en
+
+- camera - Carpeta con codigo del procesamiento de imagen.
+- interface - Carpeta con codigo de interfaz pygame
+- frames - Carpeta donde se guardan las imagenes
+- output - Carpeta donde se guardan los outputs del algoritmo de deteccion
+- app.py - Archivo de entrada al programa, para ejecutar correr este.
+- config.py - Archivo con configuraciones globales tales como colores, tamaños y direcciones.
+- Readme - Este archivo.
+

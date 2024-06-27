@@ -7,7 +7,8 @@ from datetime import datetime
 
 class StressLevelDetector:
     def __init__(self, save_frame = True):
-        self.face_cascade = cv2.CascadeClassifier('camera/haarcascade_frontalface_default.xml')
+        self.face_cascade = cv2.CascadeClassifier(
+            'camera/haarcascade_frontalface_default.xml')
         self.stress = 1
         self.frame = None
 
@@ -15,8 +16,10 @@ class StressLevelDetector:
         self.init_time = datetime.now().strftime("%m%d%Y%H%M")
         if self.save_frame:
 
-            Path(f"output/{self.init_time}").mkdir(parents=True, exist_ok=True)
-            Path(f"frames/{self.init_time}").mkdir(parents=True, exist_ok=True)
+            Path(f"output/{self.init_time}").mkdir(
+                parents=True, exist_ok=True)
+            Path(f"frames/{self.init_time}").mkdir(
+                parents=True, exist_ok=True)
 
 
         self.img_count = 0
@@ -57,30 +60,27 @@ class StressLevelDetector:
         return img, faces
 
     def __call__(self, img, imname = "detector"):
-
-
         print(".")
-
         if self.save_frame:
             cv2.imwrite(f"./frames/{self.init_time}/{self.img_count}.jpg", img)
 
         out_img, frames = self.process_frame(img)
+
         if self.save_frame:
-            with open(f"./output/{self.init_time}/{self.img_count}.csv","w") as file:
+            with open(f"./output/{self.init_time}/{self.img_count}.csv","a") as file:
                 file.write(
                     "\n".join(
                         [",".join([str(a) for a in arr]
                                   ) for arr in frames]
                     )
                 )
-            self.img_count+=1
+            self.img_count += 1
 
-        return out_img
+        return self.get_stress_level()
 
 if __name__ == "__main__":
 
     stress_detector = StressLevelDetector()
-
     cap = cv2.VideoCapture(0)
 
     while True:
