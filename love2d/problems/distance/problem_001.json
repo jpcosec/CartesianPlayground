@@ -1,0 +1,36 @@
+{
+  "id": "distance_001",
+  "type": "measure_distance",
+  "difficulty": 1,
+  "title": {
+    "en": "Distance Between Two Points",
+    "es": "Distancia Entre Dos Puntos"
+  },
+  "instructions": {
+    "en": "Calculate the distance between (0, 0) and (3, 4).",
+    "es": "Calcula la distancia entre (0, 0) y (3, 4)."
+  },
+  "setup": {
+    "point1": {"x": 0, "y": 0},
+    "point2": {"x": 3, "y": 4}
+  },
+  "hints": [
+    {
+      "en": "Use the distance formula: d = √[(x₂-x₁)² + (y₂-y₁)²]",
+      "es": "Usa la fórmula de distancia: d = √[(x₂-x₁)² + (y₂-y₁)²]"
+    },
+    {
+      "en": "For this problem: d = √[(3-0)² + (4-0)²] = √[9 + 16] = √25",
+      "es": "Para este problema: d = √[(3-0)² + (4-0)²] = √[9 + 16] = √25"
+    }
+  ],
+  "validation": {
+    "type": "numeric_answer",
+    "expected": 5.0,
+    "tolerance": 0.1
+  },
+  "success_message": {
+    "en": "Perfect! The distance is 5 units.",
+    "es": "¡Perfecto! La distancia es 5 unidades."
+  }
+}

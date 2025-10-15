@@ -1,0 +1,31 @@
+{
+  "id": "plot_002",
+  "type": "plot_points",
+  "difficulty": 1,
+  "title": {
+    "en": "Plot a Point in Quadrant II",
+    "es": "Grafica un Punto en el Cuadrante II"
+  },
+  "instructions": {
+    "en": "Plot the point (-4, 3) on the grid.",
+    "es": "Grafica el punto (-4, 3) en la cuadrícula."
+  },
+  "hints": [
+    {
+      "en": "Negative x means go left from the origin.",
+      "es": "X negativo significa ir a la izquierda desde el origen."
+    }
+  ],
+  "validation": {
+    "type": "point_at_coordinates",
+    "expected": {
+      "x": -4,
+      "y": 3
+    },
+    "tolerance": 0.5
+  },
+  "success_message": {
+    "en": "Excellent! (-4, 3) is in Quadrant II.",
+    "es": "¡Excelente! (-4, 3) está en el Cuadrante II."
+  }
+}

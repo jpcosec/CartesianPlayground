@@ -1,0 +1,16 @@
+{
+  "lesson_id": "intro_plotting",
+  "title": {
+    "en": "Introduction to Plotting Points",
+    "es": "Introducción a Graficar Puntos"
+  },
+  "description": {
+    "en": "Learn how to plot points on the Cartesian coordinate plane.",
+    "es": "Aprende a graficar puntos en el plano de coordenadas cartesianas."
+  },
+  "problems": [
+    "plot_001",
+    "plot_002"
+  ],
+  "required_score": 0.8
+}

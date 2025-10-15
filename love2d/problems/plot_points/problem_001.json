@@ -1,0 +1,31 @@
+{
+  "id": "plot_001",
+  "type": "plot_points",
+  "difficulty": 1,
+  "title": {
+    "en": "Plot a Point in Quadrant I",
+    "es": "Grafica un Punto en el Cuadrante I"
+  },
+  "instructions": {
+    "en": "Plot the point (3, 5) on the grid.",
+    "es": "Grafica el punto (3, 5) en la cuadrícula."
+  },
+  "hints": [
+    {
+      "en": "Remember: (x, y) means go x units right and y units up from the origin.",
+      "es": "Recuerda: (x, y) significa ir x unidades a la derecha y y unidades arriba desde el origen."
+    }
+  ],
+  "validation": {
+    "type": "point_at_coordinates",
+    "expected": {
+      "x": 3,
+      "y": 5
+    },
+    "tolerance": 0.5
+  },
+  "success_message": {
+    "en": "Correct! You plotted (3, 5) perfectly.",
+    "es": "¡Correcto! Graficaste (3, 5) perfectamente."
+  }
+}

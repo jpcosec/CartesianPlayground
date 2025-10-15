@@ -11,31 +11,84 @@ function Button:initialize(text, pos, size)
     self.size = size or {config.HEADER_SIZE * 2.6, config.HEADER_SIZE - 4}
     self.selected = false
     self.is_hovered = false
+
+    -- Animation properties
+    self.hover_scale = 1.0
+    self.target_scale = 1.0
+    self.hover_opacity = 1.0
+    self.corner_radius = 8
 end
 
 function Button:check_hover(mouse_x, mouse_y)
     local in_x = mouse_x >= self.pos[1] and mouse_x <= (self.pos[1] + self.size[1])
     local in_y = mouse_y >= self.pos[2] and mouse_y <= (self.pos[2] + self.size[2])
+    local was_hovered = self.is_hovered
     self.is_hovered = in_x and in_y
+
+    -- Update target scale based on hover state
+    if self.is_hovered and not was_hovered then
+        self.target_scale = 1.05
+    elseif not self.is_hovered and was_hovered then
+        self.target_scale = 1.0
+    end
+end
+
+function Button:update(dt)
+    -- Smooth scale animation
+    local lerp_speed = 10
+    self.hover_scale = self.hover_scale + (self.target_scale - self.hover_scale) * lerp_speed * dt
+
+    -- Keep scale in reasonable bounds
+    self.hover_scale = math.max(1.0, math.min(1.1, self.hover_scale))
 end
 
 function Button:set_state(value)
     self.selected = value
 end
 
+-- Helper function to draw rounded rectangle
+function Button:draw_rounded_rect(mode, x, y, w, h, radius)
+    local segments = 10
+
+    -- Draw four corner arcs
+    love.graphics.arc(mode, x + radius, y + radius, radius, math.pi, 3 * math.pi / 2, segments)
+    love.graphics.arc(mode, x + w - radius, y + radius, radius, 3 * math.pi / 2, 2 * math.pi, segments)
+    love.graphics.arc(mode, x + w - radius, y + h - radius, radius, 0, math.pi / 2, segments)
+    love.graphics.arc(mode, x + radius, y + h - radius, radius, math.pi / 2, math.pi, segments)
+
+    -- Draw rectangles to fill the middle
+    love.graphics.rectangle(mode, x + radius, y, w - 2 * radius, h)
+    love.graphics.rectangle(mode, x, y + radius, w, h - 2 * radius)
+end
+
 function Button:draw(font)
+    -- Calculate animated position and size
+    local scale = self.hover_scale
+    local scaled_w = self.size[1] * scale
+    local scaled_h = self.size[2] * scale
+    local scaled_x = self.pos[1] - (scaled_w - self.size[1]) / 2
+    local scaled_y = self.pos[2] - (scaled_h - self.size[2]) / 2
+
+    -- Select color based on state
     local color = self.is_hovered and config.COLOR_BUTTON_HOVERED or
                   (self.selected and config.COLOR_BUTTON_ACTIVE or config.COLOR_BUTTON_PASIVE)
 
+    -- Draw button background with rounded corners
     love.graphics.setColor(color)
-    love.graphics.rectangle('fill', self.pos[1], self.pos[2], self.size[1], self.size[2])
+    self:draw_rounded_rect('fill', scaled_x, scaled_y, scaled_w, scaled_h, self.corner_radius)
 
+    -- Draw subtle border
+    love.graphics.setColor(0, 0, 0, 0.3)
+    love.graphics.setLineWidth(1)
+    self:draw_rounded_rect('line', scaled_x, scaled_y, scaled_w, scaled_h, self.corner_radius)
+
+    -- Draw text
     love.graphics.setColor(config.COLOR_BLACK)
     local text_width = font:getWidth(self.text)
     local text_height = font:getHeight()
     love.graphics.print(self.text,
-                       self.pos[1] + (self.size[1] - text_width) / 2,
-                       self.pos[2] + (self.size[2] - text_height) / 2)
+                       scaled_x + (scaled_w - text_width) / 2,
+                       scaled_y + (scaled_h - text_height) / 2)
 end
 
 
@@ -52,7 +105,8 @@ function Header:initialize(height, color, font, screen_width)
     self.buttons = {
         intro = Button('intro', {300, 2}),
         line = Button('line', {400, 2}),
-        point = Button('point', {500, 2})
+        point = Button('point', {500, 2}),
+        problems = Button('problems', {600, 2})
     }
 
     self.selected_button = ""
@@ -79,6 +133,13 @@ end
 
 function Header:is_mouse_inside(mouse_y)
     return mouse_y < self.height or self.show_intro
+end
+
+function Header:update(dt)
+    -- Update button animations
+    for _, button in pairs(self.buttons) do
+        button:update(dt)
+    end
 end
 
 function Header:clear_buttons_state()

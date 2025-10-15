@@ -11,9 +11,9 @@ config.COLOR_RED = {1, 0, 0}
 config.COLOR_CYAN = {0, 1, 1}
 
 config.COLOR_FONT = {0, 0, 0}
-config.SIZE_DISPLAY = {800, 600}
-config.SCREEN_WIDTH = 800
-config.SCREEN_HEIGHT = 600
+config.SIZE_DISPLAY = {1200, 800}
+config.SCREEN_WIDTH = 1200
+config.SCREEN_HEIGHT = 800
 
 -- Header
 config.COLOR_BACKGROUND = {1, 1, 1}
